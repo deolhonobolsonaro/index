@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>De Olho no Bolsonaro</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: #121212;
+      color: #f0f0f0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      padding-bottom: 40px; /* espaço para o footer */
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    #countdown {
+      font-size: 5rem;
+      font-weight: bold;
+      letter-spacing: 0.15em;
+      font-variant-numeric: tabular-nums;
+      background: #222;
+      padding: 1rem 2rem;
+      border-radius: 10px;
+      box-shadow: 0 0 15px #0ff;
+      user-select: none;
+      display: block;
+      margin-bottom: 2rem;
+    }
+
+    #alerta {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      z-index: 1000;
+      background: rgba(0,0,0, 0.95);
+      color: #ff4444;
+      font-size: 3rem;
+      font-weight: bold;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      animation: piscar 1s infinite;
+      padding: 0 10vw;
+      line-height: 1.3;
+    }
+
+    @keyframes piscar {
+      0% { opacity: 1; }
+      50% { opacity: 0.2; }
+      100% { opacity: 1; }
+    }
+
+    footer {
+      position: absolute;
+      bottom: 15px;
+      left: 0;
+      width: 100%;
+      font-size: 0.8rem;
+      color: #888;
+      text-align: center;
+      user-select: none;
+    }
+
+    #contador-acessos {
+      color: #0ef;
+      font-weight: bold;
+      margin-top: 0.3rem;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+  <img src="/home/rodrigogms/xandbozo.jpeg" alt="Foto do Alexandre e do Bolsonaro" style="max-width:200px; margin-bottom:32px; display:block; margin-left:auto; margin-right:auto;" />
+  <h1>Tempo restante até descumprir as cautelares hoje</h1>
+
+  <div id="countdown">12:00:00</div>
+
+  <div id="alerta">
+    Atenção! Bolsonaro não pode estar mais na rua! Alerta!<br>
+    Se ele estiver na rua, ligue para o Alexandre!
+  </div>
+
+  <footer>
+    Esse site não tem nenhum objetivo, é apenas para constatar o óbvio. Se se sentiu ofendido, desculpe!<br>
+    <span id="contador-acessos">Visitantes únicos: 0</span>
+  </footer>
+
+  <script>
+    // Contador de visitantes únicos local (sem backend)
+    // Armazena no localStorage e conta visitantes diferentes por navegador
+    (function(){
+      const storageKey = 'deOlhoNoBolsonaro_visitantes_unicos';
+      let visitantes = JSON.parse(localStorage.getItem(storageKey)) || 0;
+      // Só incrementa se ainda não incrementou nesta sessão (variável em sessionStorage)
+      const sessionKey = 'visitanteContado';
+      if (!sessionStorage.getItem(sessionKey)) {
+        visitantes++;
+        localStorage.setItem(storageKey, JSON.stringify(visitantes));
+        sessionStorage.setItem(sessionKey, 'true');
+      }
+      // Atualiza display
+      document.getElementById('contador-acessos').textContent = `Visitantes únicos: ${visitantes}`;
+    })();
+
+    function updateCountdown() {
+      const now = new Date();
+
+      // Define próximos resets: às 7:00 e 19:00 todos os dias
+      let resetHour;
+      if (now.getHours() < 7) {
+        resetHour = 7;
+      } else if (now.getHours() < 19) {
+        resetHour = 19;
+      } else {
+        resetHour = 31; // para disparar próximo dia 7h
+      }
+
+      let nextReset;
+      if (resetHour === 31) {
+        nextReset = new Date(
+          now.getFullYear(),
+          now.getMonth(),
+          now.getDate() + 1,
+          7, 0, 0, 0
+        );
+      } else {
+        nextReset = new Date(
+          now.getFullYear(),
+          now.getMonth(),
+          now.getDate(),
+          resetHour, 0, 0, 0
+        );
+      }
+
+      let diff = nextReset - now;
+
+      // Se está entre 19h e 7h, mostra alerta
+      if (now.getHours() >= 19 || now.getHours() < 7) {
+        document.getElementById('alerta').style.display = 'flex';
+        document.getElementById('countdown').style.display = 'none';
+      } else {
+        document.getElementById('alerta').style.display = 'none';
+        document.getElementById('countdown').style.display = 'block';
+
+        let hours = Math.floor(diff / (1000 * 60 * 60));
+        let minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        let seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+        hours = hours.toString().padStart(2, "0");
+        minutes = minutes.toString().padStart(2, "0");
+        seconds = seconds.toString().padStart(2, "0");
+
+        document.getElementById('countdown').textContent = `${hours}:${minutes}:${seconds}`;
+      }
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+  </script>
+
+</body>
+</html>
