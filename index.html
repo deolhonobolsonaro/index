@@ -17,7 +17,7 @@
       justify-content: center;
       text-align: center;
       position: relative;
-      padding-bottom: 40px; /* espaço para o footer */
+      padding-bottom: 60px; /* espaço para o footer */
     }
 
     h1 {
@@ -73,18 +73,11 @@
       text-align: center;
       user-select: none;
     }
-
-    #contador-acessos {
-      color: #0ef;
-      font-weight: bold;
-      margin-top: 0.3rem;
-      display: block;
-    }
   </style>
 </head>
 <body>
 
-  <img src="xandbozo.jpeg" alt="Foto do Alexandre e do Bolsonaro" style="max-width:200px; margin-bottom:32px; display:block; margin-left:auto; margin-right:auto;" />
+  <img src="/home/rodrigogms/xandbozo.jpeg" alt="Foto do Alexandre e do Bolsonaro" style="max-width:200px; margin-bottom:32px; display:block; margin-left:auto; margin-right:auto;" />
   <h1>Tempo restante até descumprir as cautelares hoje</h1>
 
   <div id="countdown">12:00:00</div>
@@ -94,30 +87,20 @@
     Se ele estiver na rua, ligue para o Alexandre!
   </div>
 
-  <div id="sfchpz33jg88f1u6rr3j28hjmj7bdakq7tx"></div><script type="text/javascript" src="https://counter1.optistats.ovh/private/counter.js?c=hpz33jg88f1u6rr3j28hjmj7bdakq7tx&down=async" async></script><br><a href="https://www.webcontadores.com">contador de acessos</a><noscript><a href="https://www.webcontadores.com" title="contador de acessos"><img src="https://counter1.optistats.ovh/private/webcontadores.php?c=hpz33jg88f1u6rr3j28hjmj7bdakq7tx" border="0" title="contador de acessos" alt="contador de acessos"></a></noscript>
-  
   <footer>
-    Esse site não tem nenhum objetivo, é apenas para constatar o óbvio. Se se sentiu ofendido, desculpe!<br>
-    <span id="contador-acessos">Visitantes únicos: 0</span>
+    Esse site não tem nenhum objetivo, é apenas para constatar o óbvio. Se se sentiu ofendido, desculpe!<br><br>
+
+    <div id="sfchpz33jg88f1u6rr3j28hjmj7bdakq7tx"></div>
+    <script type="text/javascript" src="https://counter1.optistats.ovh/private/counter.js?c=hpz33jg88f1u6rr3j28hjmj7bdakq7tx&down=async" async></script><br>
+    <a href="https://www.webcontadores.com">contador de acessos</a>
+    <noscript>
+      <a href="https://www.webcontadores.com" title="contador de acessos">
+        <img src="https://counter1.optistats.ovh/private/webcontadores.php?c=hpz33jg88f1u6rr3j28hjmj7bdakq7tx" border="0" title="contador de acessos" alt="contador de acessos">
+      </a>
+    </noscript>
   </footer>
 
   <script>
-    // Contador de visitantes únicos local (sem backend)
-    // Armazena no localStorage e conta visitantes diferentes por navegador
-    (function(){
-      const storageKey = 'deOlhoNoBolsonaro_visitantes_unicos';
-      let visitantes = JSON.parse(localStorage.getItem(storageKey)) || 0;
-      // Só incrementa se ainda não incrementou nesta sessão (variável em sessionStorage)
-      const sessionKey = 'visitanteContado';
-      if (!sessionStorage.getItem(sessionKey)) {
-        visitantes++;
-        localStorage.setItem(storageKey, JSON.stringify(visitantes));
-        sessionStorage.setItem(sessionKey, 'true');
-      }
-      // Atualiza display
-      document.getElementById('contador-acessos').textContent = `Visitantes únicos: ${visitantes}`;
-    })();
-
     function updateCountdown() {
       const now = new Date();
 
